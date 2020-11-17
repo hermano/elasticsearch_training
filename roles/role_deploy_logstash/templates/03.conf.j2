@@ -1,0 +1,26 @@
+input {
+  file {
+    path => ["/tmp/test.log"]
+    start_position => beginning
+    sincedb_path => "/dev/null"
+    type => "file-type" 
+  }
+}
+
+filter {
+  if [type] == "file-type" {
+    grok {
+        match => {
+          "message" => [
+            "%{IP:client} %{WORD:method} .* %{NUMBER:bytes} %{NUMBER}"
+          ]
+        }
+    }
+  }
+}
+
+output {
+  file { 
+    path => "/tmp/logstash_output.txt"
+  }
+}

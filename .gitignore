@@ -1,0 +1,3 @@
+id_rsa
+vault.id
+roles/role_deploy_logstash/files/apache.log

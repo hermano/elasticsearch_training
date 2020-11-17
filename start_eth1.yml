@@ -1,0 +1,12 @@
+---
+- name: start eth1 adapter on all systems
+  hosts: all
+  become: yes
+  tasks:
+  - name: Call >dhclient eth1<
+    command: "dhclient eth1"
+  - name: Check adapter
+    command: "ip a"
+    register: out
+  - debug:
+      var: "out.stdout"

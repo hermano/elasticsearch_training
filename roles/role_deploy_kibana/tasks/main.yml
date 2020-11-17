@@ -1,0 +1,20 @@
+---
+- name: Install Kibana
+  yum:
+    name: kibana
+    state: present
+- name: Setup Kibana Konfig
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    owner: root
+    group: kibana
+    mode: '0660'
+- name: Start Kinbana if necessary
+  service:
+    name: kibana
+    state: started
+- name: Enable Kibana at noot time
+  service:
+    name: kibana
+    enabled: yes

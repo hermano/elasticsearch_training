@@ -1,0 +1,14 @@
+input {
+  file { 
+    path => ["/var/log/message", "/var/log/secure" ]
+    type => "fie-type"
+    start_position => beginning
+    sincedb_path => "/dev/null"
+  }
+}
+
+output {
+  file { 
+    path => "/tmp/logstash_output.txt"
+  }
+}

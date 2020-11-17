@@ -1,0 +1,82 @@
+---
+- name: install logstash
+  yum:
+    name: logstash
+    state: present
+# - name: create config for logstash
+#   template:
+#     src: 01.conf.j2
+#     dest: /etc/logstash/conf.d/01.conf
+#     owner: root
+#     group: root
+#     mode: '0660'
+# - name: create config for logstash
+#   template:
+#     src: 02.conf.j2
+#     dest: /etc/logstash/conf.d/02.conf
+#     owner: root
+#     group: root
+#     mode: '0660'
+# - name: create config for logstash
+#   template:
+#     src: 03.conf.j2
+#     dest: /etc/logstash/conf.d/03.conf
+#     owner: root
+#     group: root
+#     mode: '0660'
+- name: create work configuration for logstash
+  template:
+    src: '{{ conf_version }}.conf.j2'
+    dest: '/etc/logstash/conf.d/test.conf'
+    owner: root
+    group: root
+    mode: '0660'
+  when: conf_version is defined
+- name: create input file for logstash
+  template:
+    src: '{{ conf_version }}.input.txt.j2'
+    dest: '/tmp/test.log'
+    owner: root
+    group: root
+    mode: '0666'
+  when: conf_version is defined
+
+- name: create final input configuration for logstash
+  template:
+    src: '01_input.conf.j2'
+    dest: '/etc/logstash/conf.d/01_input.conf'
+    owner: root
+    group: root
+    mode: '0660'
+  when: conf_version is not defined
+
+- name: create final filter configuration for logstash
+  template:
+    src: '10_filter.conf.j2'
+    dest: '/etc/logstash/conf.d/10_filter.conf'
+    owner: root
+    group: root
+    mode: '0660'
+  when: conf_version is not defined
+
+- name: create final output configuration for logstash
+  template:
+    src: '99_output.conf.j2'
+    dest: '/etc/logstash/conf.d/99_output.conf'
+    owner: root
+    group: root
+    mode: '0660'
+  when: conf_version is not defined
+  
+- name: delete old test results
+  file:
+    path: /tmp/logstash_output.txt
+    state: absent
+- name: update logstash conf
+  template:
+    src: logstash.yml.j2
+    dest: /etc/logstash/logstash.yml
+    owner: root
+    group: root
+    mode: '0660'
+#- name: Ensure logstash is running

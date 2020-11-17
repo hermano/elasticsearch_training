@@ -1,0 +1,21 @@
+input {
+  file {
+    path => ["/tmp/apache.log"]
+    type => "application1"
+  }
+}
+
+filter {
+  grok {
+    match => {
+      "message" => ["%{IP:ipadress} - - \[%{HTTPDATE:date}\] \"%{WORD:method} %{URIPATHPARAM:request} %{WORD}/%{NUMBER}\" %{NUMBER:http-response} %{NUMBER} \"%{URI:referrer}\" \"%{NOTSPACE:useragent}"]
+    }
+  }
+  date { 
+    match => ["date", "dd/MMM/yyyy:HH:mm:ss Z"]
+  }
+
+  geoip {
+    source => "ipadress"
+  }
+}

@@ -1,0 +1,13 @@
+---
+- name: Deploy Elastic Search
+  hosts: elastic
+  become: yes
+  roles:
+    - role_deploy_elasticsearch
+    - role_deploy_kibana
+
+- name: Deploy LogStash
+  hosts: logstash
+  become: yes
+  roles:
+    - role_deploy_logstash
