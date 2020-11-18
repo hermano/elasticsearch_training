@@ -23,3 +23,11 @@
   yum:
     name: metricbeat
     state: present
+
+- name: configure metricbeat
+  template:
+    src: metricbeat.yml.j2
+    dest: /etc/metricbeat/metricbeat.yml
+    owner: root
+    group: root
+    mode: '0600'
