@@ -1,7 +1,7 @@
 ---
 - name: Install filebeat
   yum:
-    name: metricbeat
+    name: filebeat
     state: present
 
 - name: configure filebeat
@@ -13,7 +13,7 @@
     mode: '0600'
 - name: configure filebeat module system
   template:
-    src: system.yml.j2
+    src: file.system.yml.j2
     dest: /etc/filebeat/modules.d/system.yml
     owner: root
     group: root
@@ -31,3 +31,10 @@
     owner: root
     group: root
     mode: '0600'
+- name: configure filebeat module system
+  template:
+    src: metric.system.yml.j2
+    dest: /etc/metricbeat/modules.d/system.yml
+    owner: root
+    group: root
+    mode: '0644'

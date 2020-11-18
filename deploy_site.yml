@@ -1,6 +1,6 @@
 ---
 - name: Deploy Elastic Search
-  hosts: elastic
+  hosts: elasticsearch-mnode
   become: yes
   roles:
     - role_deploy_elasticsearch
@@ -13,7 +13,7 @@
     - role_deploy_logstash
 
 - name: Deploy Beats
-  hosts: logstash
+  hosts: beats
   become: yes
   roles:
     - role_deploy_beats
