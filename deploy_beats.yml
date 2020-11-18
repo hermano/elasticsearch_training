@@ -1,0 +1,6 @@
+---
+- name: Deploy Beats
+  hosts: logstash
+  become: yes
+  roles:
+    - role_deploy_beats
